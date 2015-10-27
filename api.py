@@ -13,7 +13,6 @@ from firebase_token_generator import create_token
 class FirebaseApi(object):
 
     def __init__(self, user_id=None):
-
         self.app_name = settings.FIREBASE_DB
         self.secret = settings.FIREBASE_SECRET
         self.user_id = user_id
@@ -29,7 +28,6 @@ class FirebaseApi(object):
 
     def create_room(self, room):
         path = '%s/%s' % (self.app_name, room)
-        print("creating room %s " % path)
         room = self._request(path)
         room.put({
             str(self.user_id): 'created room %s for user %s ' % (room, self.user_id)
@@ -41,10 +39,6 @@ class FirebaseApi(object):
         return self._request(path).get()
 
     def get_or_create_room(self, room_name):
-
-        # if settings.DEBUG:
-        #     return
-
         room = self.get_room(room_name)
         if room is  None:
             room = self.create_room(room_name)
@@ -59,9 +53,6 @@ class FirebaseApi(object):
     def put_message(self, room, data):
         path = '%s/%s/messages' % (self.app_name, room)
         return self._request(path).post(data)
-        # path = '%s/%s/message' % (self.app_name, room)
-        # self.save_message(room=room, data=data)
-        # # return self._request(path).put(message)
 
     def save_message(self, room, data):
         path = '%s/%s/messages' % (self.app_name, room)

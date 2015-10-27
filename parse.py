@@ -58,8 +58,6 @@ class Parse(object):
         object_created = self.create_object(data=data, location=location)
         object_id = object_created.get('objectId')
 
-        push_type = data.get('object_type', 'article')
-
         self.connection.request('POST', '/1/push', json.dumps({
             'channels': [channel],
             'data': {
